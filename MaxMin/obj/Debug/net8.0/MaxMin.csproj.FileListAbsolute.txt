@@ -1,0 +1,14 @@
+F:\CSharp\MaxMin\obj\Debug\net8.0\MaxMin.GeneratedMSBuildEditorConfig.editorconfig
+F:\CSharp\MaxMin\obj\Debug\net8.0\MaxMin.AssemblyInfoInputs.cache
+F:\CSharp\MaxMin\obj\Debug\net8.0\MaxMin.AssemblyInfo.cs
+F:\CSharp\MaxMin\obj\Debug\net8.0\MaxMin.csproj.CoreCompileInputs.cache
+F:\CSharp\MaxMin\bin\Debug\net8.0\MaxMin.exe
+F:\CSharp\MaxMin\bin\Debug\net8.0\MaxMin.deps.json
+F:\CSharp\MaxMin\bin\Debug\net8.0\MaxMin.runtimeconfig.json
+F:\CSharp\MaxMin\bin\Debug\net8.0\MaxMin.dll
+F:\CSharp\MaxMin\bin\Debug\net8.0\MaxMin.pdb
+F:\CSharp\MaxMin\obj\Debug\net8.0\MaxMin.dll
+F:\CSharp\MaxMin\obj\Debug\net8.0\refint\MaxMin.dll
+F:\CSharp\MaxMin\obj\Debug\net8.0\MaxMin.pdb
+F:\CSharp\MaxMin\obj\Debug\net8.0\MaxMin.genruntimeconfig.cache
+F:\CSharp\MaxMin\obj\Debug\net8.0\ref\MaxMin.dll
