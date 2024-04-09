@@ -1,151 +1,162 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+
+// 表示订单的类
 public class Order
 {
     public string id;
     private OrderDetails details;
+
+    // 构造函数，用于初始化订单信息
     public Order(string _id, string name, string client, double price)
     {
         id = _id;
         details = new OrderDetails(name, client, price);
     }
+
+    // 重写 Equals 方法，根据 id 和订单详情来比较订单
     public override bool Equals(object obj)
     {
-        Order order = obj as Order;
-        return this.id == order.id && details.Equals(order.details);
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        Order order = (Order)obj;
+        return id == order.id && details.Equals(order.details);
     }
+
+    // 重写 ToString 方法，提供订单的字符串表示形式
     public override string ToString()
     {
-        return "Order id is " + id;
+        return "订单编号为：" + id;
     }
-    public Orde()rDetails GetOrderDetails
+
+    // 获取订单详情的方法
+    public OrderDetails GetOrderDetails()
     {
         return details;
     }
 }
+
+// 表示订单详情的类
 public class OrderDetails
 {
     private string name;
     private string client;
     private double price;
+
+    // 构造函数，用于初始化订单详情
     public OrderDetails(string name, string client, double price)
     {
         this.name = name;
         this.client = client;
         this.price = price;
     }
+
+    // 重写 Equals 方法，比较订单详情
     public override bool Equals(object obj)
     {
-        OrderDetails orderdetails = obj as OrderDetails;
-        return this.name == orderdetails.name && this.client == orderdetails.client && this.price == orderdetails.price;
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        OrderDetails orderdetails = (OrderDetails)obj;
+        return name == orderdetails.name && client == orderdetails.client && price == orderdetails.price;
     }
+
+    // 重写 ToString 方法，提供订单详情的字符串表示形式
     public override string ToString()
     {
-        return "Order details: " + name + " " + client + " " + price;
+        return "订单详情：" + name + " " + client + " " + price;
     }
-    public double getprice()
+
+    // 获取订单价格的方法
+    public double GetPrice()
     {
         return price;
     }
 }
+
+// 自定义订单排序委托
 public delegate bool SortDelegate(Order o1, Order o2);
+
+// 表示订单服务的类
 public class OrderService
 {
-    //订单列表
-    List<Order> orders = new List<Order>();
+    List<Order> orders = new List<Order>(); // 用于存储订单的列表
+
+    // 获取所有订单的方法
     public List<Order> GetOrders()
     {
         return orders;
     }
-    //查找订单
+
+    // 根据订单编号查找订单的方法
     public Order Find(string id)
     {
-        var target = from order in orders
-                     where order.id == id
-                     select order;
+        var target = orders.FirstOrDefault(order => order.id == id);
 
-        if (target.Count() != 0)    //查找的目标订单存在
+        if (target != null)
         {
-            Order a = target.FirstOrDefault();
-            Console.WriteLine("Order find successly!");
-            return a;
-        }
-        else         //查找的目标订单存在，抛出异常
-        {
-            throw new OrderException(id + " isn't find!");
-        }
-
-    }
-    //新建订单
-    public void Add(Order neworder)
-    {
-        //检查订单是否已经创建,若查找到已经创建则抛出异常
-        foreach (var o in orders)
-        {
-            if (neworder.Equals(o))
-            {
-                throw (new OrderException("Order has already added!"));
-            }
-        }
-        orders.Add(neworder);
-        Console.WriteLine("Order adds successly!");
-    }
-    //删除订单
-    public void Remove(string id)
-    {
-        var target = from order in orders
-                     where order.id == id
-                     select order;
-
-        if (target.Count() != 0)
-        {
-            Order a = target.First();
-            orders.Remove(a);
-            Console.WriteLine("Remove successly!");
+            Console.WriteLine("订单查找成功！");
+            return target;
         }
         else
         {
-            throw new OrderException("Can't find the order!");
+            throw new OrderException(id + " 未找到！");
         }
     }
-    //修改订单
+
+    // 添加新订单的方法
+    public void Add(Order neworder)
+    {
+        if (orders.Any(order => neworder.Equals(order)))
+        {
+            throw new OrderException("订单已经存在！");
+        }
+
+        orders.Add(neworder);
+        Console.WriteLine("订单添加成功！");
+    }
+
+    // 根据订单编号移除订单的方法
+    public void Remove(string id)
+    {
+        var target = orders.FirstOrDefault(order => order.id == id);
+
+        if (target != null)
+        {
+            orders.Remove(target);
+            Console.WriteLine("移除成功！");
+        }
+        else
+        {
+            throw new OrderException("未找到该订单！");
+        }
+    }
+
+    // 修改订单的方法
     public void Change(string id, Order neworder)
     {
-        for (int i = 0; i < orders.Count(); i++)
+        for (int i = 0; i < orders.Count; i++)
         {
             if (orders[i].id == id)
             {
                 orders[i] = neworder;
+                break; // 找到并更新后，跳出循环
             }
         }
-
     }
-    //订单排序
+
+    // 按订单编号排序的方法
     public List<Order> Sort()
     {
-        var query = from order in orders
-                    orderby order.id
-                    select order;
-        return query.ToList();
+        return orders.OrderBy(order => order.id).ToList();
     }
-    //自定义排序
+
+    // 使用自定义排序委托排序订单的方法
     public List<Order> Sort(SortDelegate s)
     {
-        List<Order> orders = this.orders;
-        for (int i = 0; i < orders.Count(); i++)
-        {
-            for (int j = 0; j < orders.Count() - i; i++)
-            {
-                if (s(orders[j], orders[j + 1]))
-                {
-                    Order o = orders[j];
-                    orders[j] = orders[j + 1];
-                    orders[j + 1] = o;
-                }
-            }
-        }
-        return orders;
+        return orders.OrderBy(order => order.GetOrderDetails().GetPrice()).ToList();
     }
 }
 
@@ -153,7 +164,6 @@ class Program
 {
     static void Main(string[] args)
     {
-
         try
         {
             OrderService orderservice = new OrderService();
@@ -162,8 +172,8 @@ class Program
             Order order3 = new Order("222", "b", "fanyuan", 200);
             orderservice.Add(order1);
             orderservice.Add(order3);
-            //lamda表达式排序
-            List<Order> l1 = orderservice.Sort((x1, x2) => { return x1.GetOrderDetails().getprice() > x2.GetOrderDetails().getprice(); });
+
+            List<Order> l1 = orderservice.Sort((x1, x2) => x1.GetOrderDetails().GetPrice() > x2.GetOrderDetails().GetPrice());
             l1.ForEach(x => Console.WriteLine(x));
 
             Order order2 = orderservice.Find("111");
@@ -172,18 +182,19 @@ class Program
             orderservice.Remove(order2.id);
             orderservice.Remove(order3.id);
 
-            //orderservice.Remove("111");
             order2 = orderservice.Find("111");
         }
-        catch (OrderException ex) { }
-
+        catch (OrderException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 }
 
-//自定义异常类
+// 表示订单服务的自定义异常类
 class OrderException : ApplicationException
 {
-    public OrderException(string message)
+    public OrderException(string message) : base(message)
     {
         Console.WriteLine(message);
     }
