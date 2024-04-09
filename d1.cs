@@ -148,7 +148,8 @@ public class OrderService
         return orders;
     }
 }
-internal class Program
+
+class Program
 {
     static void Main(string[] args)
     {
@@ -157,22 +158,22 @@ internal class Program
         {
             OrderService orderservice = new OrderService();
 
-            Order order1 = new Order("123", "a", "feng", 300);
-            Order order3 = new Order("124", "b", "song", 200);
+            Order order1 = new Order("111", "a", "yang", 300);
+            Order order3 = new Order("222", "b", "fanyuan", 200);
             orderservice.Add(order1);
             orderservice.Add(order3);
             //lamda表达式排序
             List<Order> l1 = orderservice.Sort((x1, x2) => { return x1.GetOrderDetails().getprice() > x2.GetOrderDetails().getprice(); });
             l1.ForEach(x => Console.WriteLine(x));
 
-            Order order2 = orderservice.Find("123");
-            orderservice.Change("123", new Order("125", "c", "kou", 100));
-            order2 = orderservice.Find("125");
+            Order order2 = orderservice.Find("111");
+            orderservice.Change("111", new Order("333", "c", "qianni", 100));
+            order2 = orderservice.Find("333");
             orderservice.Remove(order2.id);
             orderservice.Remove(order3.id);
 
-            //orderservice.Remove("123123");
-            order2 = orderservice.Find("123");
+            //orderservice.Remove("111");
+            order2 = orderservice.Find("111");
         }
         catch (OrderException ex) { }
 
