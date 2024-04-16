@@ -1,0 +1,14 @@
+F:\CSharp\b3.Factory\bin\Debug\net8.0\b3.Factory.exe
+F:\CSharp\b3.Factory\bin\Debug\net8.0\b3.Factory.deps.json
+F:\CSharp\b3.Factory\bin\Debug\net8.0\b3.Factory.runtimeconfig.json
+F:\CSharp\b3.Factory\bin\Debug\net8.0\b3.Factory.dll
+F:\CSharp\b3.Factory\bin\Debug\net8.0\b3.Factory.pdb
+F:\CSharp\b3.Factory\obj\Debug\net8.0\b3.Factory.GeneratedMSBuildEditorConfig.editorconfig
+F:\CSharp\b3.Factory\obj\Debug\net8.0\b3.Factory.AssemblyInfoInputs.cache
+F:\CSharp\b3.Factory\obj\Debug\net8.0\b3.Factory.AssemblyInfo.cs
+F:\CSharp\b3.Factory\obj\Debug\net8.0\b3.Factory.csproj.CoreCompileInputs.cache
+F:\CSharp\b3.Factory\obj\Debug\net8.0\b3.Factory.dll
+F:\CSharp\b3.Factory\obj\Debug\net8.0\refint\b3.Factory.dll
+F:\CSharp\b3.Factory\obj\Debug\net8.0\b3.Factory.pdb
+F:\CSharp\b3.Factory\obj\Debug\net8.0\b3.Factory.genruntimeconfig.cache
+F:\CSharp\b3.Factory\obj\Debug\net8.0\ref\b3.Factory.dll
