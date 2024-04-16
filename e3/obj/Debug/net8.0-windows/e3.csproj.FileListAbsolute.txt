@@ -1,0 +1,16 @@
+F:\CSharp\e3\bin\Debug\net8.0-windows\e3.exe
+F:\CSharp\e3\bin\Debug\net8.0-windows\e3.deps.json
+F:\CSharp\e3\bin\Debug\net8.0-windows\e3.runtimeconfig.json
+F:\CSharp\e3\bin\Debug\net8.0-windows\e3.dll
+F:\CSharp\e3\bin\Debug\net8.0-windows\e3.pdb
+F:\CSharp\e3\obj\Debug\net8.0-windows\e3.Form1.resources
+F:\CSharp\e3\obj\Debug\net8.0-windows\e3.csproj.GenerateResource.cache
+F:\CSharp\e3\obj\Debug\net8.0-windows\e3.GeneratedMSBuildEditorConfig.editorconfig
+F:\CSharp\e3\obj\Debug\net8.0-windows\e3.AssemblyInfoInputs.cache
+F:\CSharp\e3\obj\Debug\net8.0-windows\e3.AssemblyInfo.cs
+F:\CSharp\e3\obj\Debug\net8.0-windows\e3.csproj.CoreCompileInputs.cache
+F:\CSharp\e3\obj\Debug\net8.0-windows\e3.dll
+F:\CSharp\e3\obj\Debug\net8.0-windows\refint\e3.dll
+F:\CSharp\e3\obj\Debug\net8.0-windows\e3.pdb
+F:\CSharp\e3\obj\Debug\net8.0-windows\e3.genruntimeconfig.cache
+F:\CSharp\e3\obj\Debug\net8.0-windows\ref\e3.dll
