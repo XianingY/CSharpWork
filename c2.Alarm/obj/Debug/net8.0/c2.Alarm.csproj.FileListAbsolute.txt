@@ -1,0 +1,14 @@
+F:\CSharp\c2.Alarm\bin\Debug\net8.0\c2.Alarm.exe
+F:\CSharp\c2.Alarm\bin\Debug\net8.0\c2.Alarm.deps.json
+F:\CSharp\c2.Alarm\bin\Debug\net8.0\c2.Alarm.runtimeconfig.json
+F:\CSharp\c2.Alarm\bin\Debug\net8.0\c2.Alarm.dll
+F:\CSharp\c2.Alarm\bin\Debug\net8.0\c2.Alarm.pdb
+F:\CSharp\c2.Alarm\obj\Debug\net8.0\c2.Alarm.GeneratedMSBuildEditorConfig.editorconfig
+F:\CSharp\c2.Alarm\obj\Debug\net8.0\c2.Alarm.AssemblyInfoInputs.cache
+F:\CSharp\c2.Alarm\obj\Debug\net8.0\c2.Alarm.AssemblyInfo.cs
+F:\CSharp\c2.Alarm\obj\Debug\net8.0\c2.Alarm.csproj.CoreCompileInputs.cache
+F:\CSharp\c2.Alarm\obj\Debug\net8.0\c2.Alarm.dll
+F:\CSharp\c2.Alarm\obj\Debug\net8.0\refint\c2.Alarm.dll
+F:\CSharp\c2.Alarm\obj\Debug\net8.0\c2.Alarm.pdb
+F:\CSharp\c2.Alarm\obj\Debug\net8.0\c2.Alarm.genruntimeconfig.cache
+F:\CSharp\c2.Alarm\obj\Debug\net8.0\ref\c2.Alarm.dll
