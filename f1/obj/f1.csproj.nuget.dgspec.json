@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\CSharp\\f1\\f1.csproj": {}
+    "F:\\CSharpProgram\\CSharpWork\\f1\\f1.csproj": {}
   },
   "projects": {
-    "F:\\CSharp\\f1\\f1.csproj": {
+    "F:\\CSharpProgram\\CSharpWork\\f1\\f1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\CSharp\\f1\\f1.csproj",
+        "projectUniqueName": "F:\\CSharpProgram\\CSharpWork\\f1\\f1.csproj",
         "projectName": "f1",
-        "projectPath": "F:\\CSharp\\f1\\f1.csproj",
+        "projectPath": "F:\\CSharpProgram\\CSharpWork\\f1\\f1.csproj",
         "packagesPath": "C:\\Users\\86180\\.nuget\\packages\\",
-        "outputPath": "F:\\CSharp\\f1\\obj\\",
+        "outputPath": "F:\\CSharpProgram\\CSharpWork\\f1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

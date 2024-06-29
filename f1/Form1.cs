@@ -10,26 +10,26 @@ namespace f1
 
         public Form1()
         {
-            // 初始化窗口组件
-            this.Text = "简单的文件浏览器";
+       
+            this.Text = "Window";
             this.Size = new System.Drawing.Size(800, 600);
 
-            // 创建并配置TreeView
+           
             this.treeView = new TreeView();
             this.treeView.Dock = DockStyle.Left;
             this.treeView.AfterSelect += new TreeViewEventHandler(treeView_AfterSelect);
 
-            // 创建并配置ListView
+      
             this.listView = new ListView();
             this.listView.Dock = DockStyle.Fill;
             this.listView.View = View.List;
             this.listView.MouseDoubleClick += new MouseEventHandler(listView_MouseDoubleClick);
 
-            // 将TreeView和ListView添加到窗口
+           
             this.Controls.Add(this.listView);
             this.Controls.Add(this.treeView);
 
-            // 加载用户目录
+      
             LoadDirectories(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
         }
 
@@ -45,7 +45,7 @@ namespace f1
                 DirectoryInfo di = new DirectoryInfo(dir);
                 TreeNode node = new TreeNode(di.Name);
                 node.Tag = di.FullName;
-                node.Nodes.Add("");  // 添加一个空节点以启用展开图标
+                node.Nodes.Add("");  
                 this.treeView.Nodes.Add(node);
             }
             catch (Exception ex)
@@ -63,7 +63,7 @@ namespace f1
 
             try
             {
-                // 加载子目录
+              
                 string[] dirs = Directory.GetDirectories(path);
                 foreach (string dir in dirs)
                 {
@@ -74,7 +74,7 @@ namespace f1
                     node.Nodes.Add(subNode);
                 }
 
-                // 加载文件
+                
                 string[] files = Directory.GetFiles(path);
                 foreach (string file in files)
                 {
