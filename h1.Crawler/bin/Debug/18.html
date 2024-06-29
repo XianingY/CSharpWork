@@ -1,0 +1,642 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>SunStriKE - 博客园</title>
+    <link rel="canonical" href="https://www.cnblogs.com/sunstrikes" />
+    <link rel="shortcut icon" id="favicon" href="//assets.cnblogs.com/favicon.svg?v=2" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=66sYdxA-9u2BKP7H-2HZILs0zfHHyg9mPlzJ5LGJ9qA" />
+    
+
+    
+        
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/sunstrikes/custom.css?v=VqHZo&#x2B;uzKb/gfbZ3VlP2mBnmPIM=" />
+    <link type="text/css" rel="stylesheet" href="/css/fonts/Consolas.min.css" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/css/mobile-common.min.css?v=F2e9dMGzAUzDRZU-W-4qVsoLMeDjGqD2cUFxFY5EcWc" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/sunstrikes/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/sunstrikes/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/sunstrikes/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 787305;
+        var currentBlogApp = 'sunstrikes';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'Custom';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 2;
+        window.enableCodeLineNumber = true;
+        window.codeHighlightTheme = 'prism-atom-dark';
+        window.darkModeCodeHighlightTheme = 'prism-atom-dark';
+        window.isDarkCodeHighlightTheme = true;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+    <script src="https://assets.cnblogs.com/scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn-www.cnblogs.com/js/blog-common.min.js?v=HVD3OuTcaOS-_cdZWluRJer8akyNk6T2cpj5RqCIgDQ"></script>
+        <script>updateCustomBlogReferrer();</script>
+    
+</head>
+<body class="skin-custom no-navbar mathjax3">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="//assets.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li><a href="https://www.cnblogs.com/cmt/articles/18197617">众包</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li><a href="https://market.cnblogs.com" target="_blank">云市场</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="//assets.cnblogs.com/icons/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'sunstrikes', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//assets.cnblogs.com/icons/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//assets.cnblogs.com/icons/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <div class="loading">
+  <div class="box">
+    <h2>Loading</h2>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/sunstrikes/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/sunstrikes">SunStriKE's Blog</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/sunstrikes/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/SunStriKE">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/sunstrikes/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18274445">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/sunstrikes/p/archive/2024/06/28">2024年6月28日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/18274445">
+    <span>
+        LLM并行训练3-数据并行
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18274445">
+摘要：        
+大模型训练 数据并行相关的学习笔记, 主要内容 zero, zero++    <a href="https://www.cnblogs.com/sunstrikes/p/18274445" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-06-28 22:25
+SunStriKE
+<span data-post-id="18274445" class="post-view-count">阅读(51)</span> 
+<span data-post-id="18274445" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18274445" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18274445" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18271719">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/sunstrikes/p/archive/2024/06/27">2024年6月27日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/18271719">
+    <span>
+        LLM并行训练2-张量并行
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18271719">
+摘要：        
+张量并行相关原理的学习笔记    <a href="https://www.cnblogs.com/sunstrikes/p/18271719" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-06-27 17:22
+SunStriKE
+<span data-post-id="18271719" class="post-view-count">阅读(10)</span> 
+<span data-post-id="18271719" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18271719" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18271719" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18270017">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/sunstrikes/p/archive/2024/06/26">2024年6月26日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/18270017">
+    <span>
+        LLM并行训练1-流水线并行
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18270017">
+摘要：        
+流水线并行相关原理的学习笔记    <a href="https://www.cnblogs.com/sunstrikes/p/18270017" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-06-26 22:06
+SunStriKE
+<span data-post-id="18270017" class="post-view-count">阅读(98)</span> 
+<span data-post-id="18270017" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18270017" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18270017" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18252517">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/sunstrikes/p/archive/2024/06/17">2024年6月17日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/18253121">
+    <span>
+        cuda程序优化-3.通信简介
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18253121">
+摘要：        
+GPU进行卡间通信/多机通信的算法简介    <a href="https://www.cnblogs.com/sunstrikes/p/18253121" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-06-17 19:56
+SunStriKE
+<span data-post-id="18253121" class="post-view-count">阅读(8)</span> 
+<span data-post-id="18253121" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18253121" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18253121" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/18252517">
+    <span>
+        cuda程序优化-2.访存优化
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18252517">
+摘要：        
+在CUDA程序中, 访存优化个人认为是最重要的优化项. 往往kernel会卡在数据传输而不是计算上, 为了最大限度利用GPU的计算能力, 我们需要根据GPU硬件架构对kernel访存进行合理的编写.    <a href="https://www.cnblogs.com/sunstrikes/p/18252517" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-06-17 15:31
+SunStriKE
+<span data-post-id="18252517" class="post-view-count">阅读(204)</span> 
+<span data-post-id="18252517" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18252517" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18252517" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_18235920">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/sunstrikes/p/archive/2024/06/06">2024年6月6日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/18235920">
+    <span>
+        CUDA程序优化-1.基础介绍
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_18235920">
+摘要：        
+介绍CUDA的基本概念和架构，帮助读者建立对CUDA的初步认识，包括硬件架构/CUDA基础等内容    <a href="https://www.cnblogs.com/sunstrikes/p/18235920" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2024-06-06 19:49
+SunStriKE
+<span data-post-id="18235920" class="post-view-count">阅读(68)</span> 
+<span data-post-id="18235920" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18235920" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18235920" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17680693">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/sunstrikes/p/archive/2023/09/05">2023年9月5日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/17680693.html">
+    <span>
+        Paddle图神经网络训练-PGLBox代码阅读笔记
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_17680693">
+摘要：        
+Paddle图神经网络训练, PGLBox代码阅读笔记, 主要为核心GPU游走相关逻辑, 分布式训练部分后续补充.    <a href="https://www.cnblogs.com/sunstrikes/p/17680693.html" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-09-05 20:04
+SunStriKE
+<span data-post-id="17680693" class="post-view-count">阅读(276)</span> 
+<span data-post-id="17680693" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17680693" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17680693" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17268535">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/sunstrikes/p/archive/2023/03/29">2023年3月29日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/17268535.html">
+    <span>
+        AutoEmbedding论文阅读笔记
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_17268535">
+摘要：        
+推荐系统中对embedding维度进行自动调优的常见方法 阅读笔记.    <a href="https://www.cnblogs.com/sunstrikes/p/17268535.html" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-29 12:57
+SunStriKE
+<span data-post-id="17268535" class="post-view-count">阅读(58)</span> 
+<span data-post-id="17268535" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17268535" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17268535" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17253106">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/sunstrikes/p/archive/2023/03/24">2023年3月24日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/17253110.html">
+    <span>
+        DesignPattern-part2
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_17253110">
+摘要：        
+现代c++设计模式 part2
+桥接，适配器，装饰器    <a href="https://www.cnblogs.com/sunstrikes/p/17253110.html" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-24 19:22
+SunStriKE
+<span data-post-id="17253110" class="post-view-count">阅读(21)</span> 
+<span data-post-id="17253110" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17253110" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17253110" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/17253106.html">
+    <span>
+        DesignPattern-part1
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+
+<div class="c_b_p_desc" id="postlist_description_17253106">
+摘要：        
+现代c++设计模式 part1
+工厂模式，建造者模式与单例模式的现代实现    <a href="https://www.cnblogs.com/sunstrikes/p/17253106.html" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-24 19:21
+SunStriKE
+<span data-post-id="17253106" class="post-view-count">阅读(24)</span> 
+<span data-post-id="17253106" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17253106" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17253106" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/sunstrikes?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2024 SunStriKE
+<br /><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8ONv0caE5GtEh3YJ5j088klyevUmcXBLiZcVtUq00GCdq9FAG9Q-b7XqgP3NstHaizMfikIYi0km3tIg8Kmlshr1_jPhBCOC59HJhGM4eiDhXNtJpVVeCOqTPHmDXH5GlxJC_0qQvLzg4Za1hJTqLUE" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M95P3TTWJZ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

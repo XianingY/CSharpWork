@@ -1,0 +1,605 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>博客园团队 - 博客园</title>
+    <link rel="canonical" href="https://www.cnblogs.com/cmt" />
+    <link rel="shortcut icon" id="favicon" href="//assets.cnblogs.com/favicon.svg?v=2" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=66sYdxA-9u2BKP7H-2HZILs0zfHHyg9mPlzJ5LGJ9qA" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/lessismoreright/bundle-lessismoreright.min.css?v=O5zHESxCF0tzyVg01nX06fLeohvC5JYxsLWE4NmQOMg" />
+        
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/cmt/custom.css?v=C62cYVh1rVAj83BNIBoLpeQJu&#x2B;0=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/lessismoreright/bundle-lessismoreright-mobile.min.css?v=MfrgFaFXzY5qlNFqLDqLeJ60oZXqAXyqcuGef5Vex3c" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/cmt/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/cmt/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/cmt/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 39258;
+        var currentBlogApp = 'cmt';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'LessIsMoreRight';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+    <script src="https://assets.cnblogs.com/scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn-www.cnblogs.com/js/blog-common.min.js?v=HVD3OuTcaOS-_cdZWluRJer8akyNk6T2cpj5RqCIgDQ"></script>
+    
+</head>
+<body class="skin-lessismoreright has-navbar mathjax3 has-bannerbar">
+    <a name="top"></a>
+        <a href="https://www.cnblogs.com/cmt/p/18247621" onclick="countCreativeClicks('C0-阿里云-PolarDB')" target="_blank" rel="nofollow">
+            <div class="bannerbar forpc" style="background-size: contain;background-image: url(https://img2024.cnblogs.com/blog/35695/202405/35695-20240524121614762-1692171159.jpg);padding-left: 15px;">
+                <img src="https://img2024.cnblogs.com/blog/35695/202406/35695-20240614120955110-605161597.jpg" style="" onload="countCreativeImpressions('C0-阿里云-PolarDB')" />
+                
+                
+                <span id="c0_impression" style="display:none"></span>
+            </div>
+        </a>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="//assets.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li><a href="https://www.cnblogs.com/cmt/articles/18197617">众包</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li><a href="https://market.cnblogs.com" target="_blank">云市场</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="//assets.cnblogs.com/icons/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'cmt', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//assets.cnblogs.com/icons/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//assets.cnblogs.com/icons/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <div id="home">
+    <div id="header">
+        <div id="blogTitle">
+            <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/cmt">博客园官方博客</a>
+</div>
+<div class="subtitle">代码改变世界</div>
+
+        </div>
+        <div id="navigator">
+            
+<ul id="navList">
+    <li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+    <li id="nav_myhome">
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/cmt/">
+首页</a>
+</li>
+    <li id="nav_newpost">
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+    <li id="nav_contact">
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%8D%9A%E5%AE%A2%E5%9B%AD%E5%9B%A2%E9%98%9F">
+联系</a></li>
+    <li id="nav_rss">
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/cmt/rss/">
+订阅</a></li>
+    <li id="nav_admin">
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+            <div class="blogStats">
+                <div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="mainContent">
+            <div class="forFlow">
+                
+
+
+
+
+
+
+    
+
+
+<div class="day" role="article" aria-describedby="postlist_description_18240585">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/cmt/p/archive/2024/06">2024年6月
+</a>
+    </div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18269272">
+    <span>
+        一码胜千言，博园Polo衫，上架预售啦
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18269272">
+摘要：        
+在5月30日博客园T恤上架后，考虑到有些园友上班不能穿T恤，我们将周边下一站锁定在 polo 衫。 锁定容易，设计是难题，polo 衫容不得半点复杂的设计，我们没有想到更好的创意，于是偷懒地沿用T恤的设计，去掉「废话少说」(TALK IS CHEAP)，删掉「放码过来」(Show me the co    <a href="https://www.cnblogs.com/cmt/p/18269272" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-26 19:01
+博客园团队
+<span data-post-id="18269272" class="post-view-count">阅读(3635)</span> 
+<span data-post-id="18269272" class="post-comment-count">评论(36)</span> 
+<span data-post-id="18269272" class="post-digg-count">推荐(19)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18269272" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18264504">
+    <span>
+        上周热点回顾（6.17-6.23）
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18264504">
+摘要：        
+热点随笔： &#183;&#160;博客园众包平台：50w+驱动开发大单，全园找人接单&#160;(博客园团队)&#183;&#160;开源的网络瑞士军刀「GitHub 热点速览」&#160;(削微寒)&#183;&#160;哎，被这个叫做at least once的玩意坑麻了。&#160;(why技术)&#183;&#160;希望六月：参加阿里云 PolarDB 与「函数计算」动手活动，送博客园T恤&#160;(博    <a href="https://www.cnblogs.com/cmt/p/18264504" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-24 10:27
+博客园团队
+<span data-post-id="18264504" class="post-view-count">阅读(964)</span> 
+<span data-post-id="18264504" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18264504" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18264504" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18262107">
+    <span>
+        博客园众包平台：游戏开发者找人长期合作建设自己的网站
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18262107">
+摘要：        
+园子的众包平台目前已经召集了1500多合作开发者，这些合作开发者不仅能接单，还能带来单子，今天分享的这个单子就是来自其中一位合作开发者自己的需求。 这位合作开发者是资深游戏开发者，可以独立开发完整游戏产品，17年工作经验，擅长 .NET 与 Unity。通过近10年时间，目前已积累一套 DEF 分布    <a href="https://www.cnblogs.com/cmt/p/18262107" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-22 12:30
+博客园团队
+<span data-post-id="18262107" class="post-view-count">阅读(1289)</span> 
+<span data-post-id="18262107" class="post-comment-count">评论(4)</span> 
+<span data-post-id="18262107" class="post-digg-count">推荐(6)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18262107" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18247621">
+    <span>
+        希望六月：参加阿里云 PolarDB 与「函数计算」动手活动，送博客园T恤
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18247621">
+摘要：        
+加园子企业微信参加动手活动，成功完成动手任务即送1件博客园T恤，活动将于6月30日结束 截止6月28日 22:20，PolarDB动手活动已有81人成功完成（共需100人），函数计算动手活动已有11人成功完成（共需100人） 今年六月园子的广告业务在回暖，仅阿里云一家厂商就同时有好几个推广项目在合作    <a href="https://www.cnblogs.com/cmt/p/18247621" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-18 16:35
+博客园团队
+<span data-post-id="18247621" class="post-view-count">阅读(6954)</span> 
+<span data-post-id="18247621" class="post-comment-count">评论(3)</span> 
+<span data-post-id="18247621" class="post-digg-count">推荐(16)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18247621" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18253869">
+    <span>
+        上周热点回顾（6.10-6.16）
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18253869">
+摘要：        
+热点随笔： &#183;&#160;「指间灵动，快码加编」：阿里云通义灵码，再次降临博客园&#160;(博客园团队)&#183;&#160;老生常谈！程序员为什么要阅读源代码？&#160;(Yxh_blogs)&#183;&#160;千万级流量冲击下，如何保证极致性能&#160;(Hello-Brand)&#183;&#160;面试官：你讲下接口防重放如何处理？&#160;(程序员博博)&#183;&#160;C#开发的目录图标更改器     <a href="https://www.cnblogs.com/cmt/p/18253869" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-18 10:38
+博客园团队
+<span data-post-id="18253869" class="post-view-count">阅读(750)</span> 
+<span data-post-id="18253869" class="post-comment-count">评论(1)</span> 
+<span data-post-id="18253869" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18253869" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18251665">
+    <span>
+        博客园众包平台：50w+驱动开发大单，全园找人接单
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18251665">
+摘要：        
+11:50进展更新：已介绍2家有意向的接单方给客户 17:00进展更新：又介绍1家有意向的接单方给客户 园子的众包平台在小步慢跑、量力而行地向前推进着，一边在召集早期合作开发者，一边在等单来。 昨天就等来一单，而是很大很大的单子，报价50w-100w，也是很难很难的单子，发单后合作开发者中没人敢接单    <a href="https://www.cnblogs.com/cmt/p/18251665" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-17 09:40
+博客园团队
+<span data-post-id="18251665" class="post-view-count">阅读(7808)</span> 
+<span data-post-id="18251665" class="post-comment-count">评论(81)</span> 
+<span data-post-id="18251665" class="post-digg-count">推荐(31)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18251665" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18249122">
+    <span>
+        博客园商业化之路-众包平台：继续召集早期合作开发者
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18249122">
+摘要：        
+6月22日更新：当前正在召集第4批合作开发者，每批召集500人，目前已召集1500多位合作开发者 会员、周边、广告是园子现在维持生存的主要收入来源，而众包平台是园子未来实现商业化规模增长的希望所在。 今年5月开始的众包平台建设是万里长征，不仅需要融资，还需要找到合伙人组建新的团队。虽然当前既没有钱又    <a href="https://www.cnblogs.com/cmt/p/18249122" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-16 12:39
+博客园团队
+<span data-post-id="18249122" class="post-view-count">阅读(1708)</span> 
+<span data-post-id="18249122" class="post-comment-count">评论(9)</span> 
+<span data-post-id="18249122" class="post-digg-count">推荐(5)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18249122" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18245606">
+    <span>
+        园子周边：Polo 衫效果图预览
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18245606">
+摘要：        
+「废话少说，放码过来」主题T恤上架之后，考虑到部分园友上班不能穿T恤，我们准备出 polo 衫。 考虑到 polo 衫容不得半点复杂设计，只能采用尽可能简单的设计。「废话少说」改为一句废话没有，去掉「TALK IS CHEAP」，连「放码过来」也成为废话，去掉「Show me the code.」，    <a href="https://www.cnblogs.com/cmt/p/18245606" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-13 12:42
+博客园团队
+<span data-post-id="18245606" class="post-view-count">阅读(2848)</span> 
+<span data-post-id="18245606" class="post-comment-count">评论(37)</span> 
+<span data-post-id="18245606" class="post-digg-count">推荐(25)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18245606" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18239927">
+    <span>
+        「指间灵动，快码加编」：阿里云通义灵码，再次降临博客园
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18239927">
+摘要：        
+博客园专属推广链接 https://tongyi.cnblogs.com/ （打开链接用阿里云账号登录，vscode 安装通义灵码插件完成问答互动） 第一期推广目标是7月底前邀请1万人 截止6月21日，已邀请316人 截止6月28日，已邀请370人 园子目前的主要收入来源是会员、周边、广告，在当前会    <a href="https://www.cnblogs.com/cmt/p/18239927" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-11 09:56
+博客园团队
+<span data-post-id="18239927" class="post-view-count">阅读(8476)</span> 
+<span data-post-id="18239927" class="post-comment-count">评论(66)</span> 
+<span data-post-id="18239927" class="post-digg-count">推荐(35)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18239927" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/cmt/p/18240585">
+    <span>
+        上周热点回顾（6.3-6.9）
+    </span>
+    
+
+</a>
+        </div>
+        <div class="postCon">
+            
+
+<div class="c_b_p_desc" id="postlist_description_18240585">
+摘要：        
+热点随笔： &#183;&#160;C#开源实用的工具类库，集成超过1000多种扩展方法&#160;(追逐时光者)&#183;&#160;RabbitMQ 进阶使用之延迟队列 → 订单在30分钟之内未支付则自动取消&#160;(青石路)&#183;&#160;.Net 中间件 - 新开源代码生成器 -ReZero&#160;(阿妮亚)&#183;&#160;C#.Net筑基-String字符串超全总结 [深    <a href="https://www.cnblogs.com/cmt/p/18240585" class="c_b_p_desc_readmore">阅读全文</a>
+</div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2024-06-10 12:41
+博客园团队
+<span data-post-id="18240585" class="post-view-count">阅读(509)</span> 
+<span data-post-id="18240585" class="post-comment-count">评论(0)</span> 
+<span data-post-id="18240585" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18240585" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+</div>
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/cmt?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+            </div>
+        </div>
+
+        <div id="sideBar">
+            <div id="sideBarMain">
+                <div id="sidebar_news" class="newsItem">
+    
+<h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script> 
+</div>
+<div id="sidebar_c3"></div>
+                <div id="calendar"><div id="blog-calendar" style="display:none"></div></div>                
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="leftcontentcontainer">
+                    <!-- begin:SingleColumn -->
+                    <div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+                    <!-- end:  SingleColumn -->
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div id="footer">
+        <!--done-->
+Copyright &copy; 2024 博客园团队
+<br /><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+    </div>
+</div>
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8ONv0caE5GtEh3YJ5j088klUd56CM71f7Wn30IIzQm78SoM-anKL9S90bktZlW1JXmDxaUyPvShqW1DVQA_LKcO2tRaajZfa0ZphYxlLbZfR-E1bXGMmJtG4ffUR_hXLLTOhK0Cf7NS4O7yWQZcsDYw" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M95P3TTWJZ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

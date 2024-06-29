@@ -1,0 +1,641 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="keywords" content="java,Springboot,后端,Spring Security,从零开始学Spring Boot系列" />
+    <meta name="description" content="在Web应用程序中，安全性是一个至关重要的方面。Spring Security是Spring框架的一个子项目，用于提供安全访问控制的功能。通过集成Spring Security，我们可以轻松实现用户认证、授权、加密、会话管理等安全功能。本篇文章将指导大家从零开始，在Spring Boot项目中集成S" />
+    <meta property="og:description" content="在Web应用程序中，安全性是一个至关重要的方面。Spring Security是Spring框架的一个子项目，用于提供安全访问控制的功能。通过集成Spring Security，我们可以轻松实现用户认证、授权、加密、会话管理等安全功能。本篇文章将指导大家从零开始，在Spring Boot项目中集成S" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>从零开始学Spring Boot系列-集成Spring Security实现用户认证与授权 - 代码匠心 - 博客园</title>
+    <link rel="canonical" href="https://www.cnblogs.com/daimajiangxin/p/18274933" />
+    <link rel="shortcut icon" id="favicon" href="//assets.cnblogs.com/favicon.svg?v=2" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=66sYdxA-9u2BKP7H-2HZILs0zfHHyg9mPlzJ5LGJ9qA" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/simplememory/bundle-simplememory.min.css?v=SiaEEyuLLyqQ30U6p0_gAunDLOqZtbt7kF5APbDruVo" />
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/SimpleMemory/bundle-simplememory-mobile.min.css?v=20avRjbdbr8kYqxlGwdQXCDadIqpdIPaT1DzHC6hI9w" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/daimajiangxin/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/daimajiangxin/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/daimajiangxin/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 814146;
+        var currentBlogApp = 'daimajiangxin';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+        <script>
+            window.currentPostId = 18274933;
+            window.currentPostDateAdded = '2024-06-29 12:11';
+        </script>
+    <script src="https://assets.cnblogs.com/scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn-www.cnblogs.com/js/blog-common.min.js?v=HVD3OuTcaOS-_cdZWluRJer8akyNk6T2cpj5RqCIgDQ"></script>
+    
+</head>
+<body class="skin-simplememory has-navbar has-bannerbar">
+    <a name="top"></a>
+        <a href="https://www.cnblogs.com/cmt/p/18247621" onclick="countCreativeClicks('C0-阿里云-PolarDB')" target="_blank" rel="nofollow">
+            <div class="bannerbar forpc" style="background-size: contain;background-image: url(https://img2024.cnblogs.com/blog/35695/202405/35695-20240524121614762-1692171159.jpg);padding-left: 15px;">
+                <img src="https://img2024.cnblogs.com/blog/35695/202406/35695-20240614120955110-605161597.jpg" style="" onload="countCreativeImpressions('C0-阿里云-PolarDB')" />
+                
+                
+                <span id="c0_impression" style="display:none"></span>
+            </div>
+        </a>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="//assets.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li><a href="https://www.cnblogs.com/cmt/articles/18197617">众包</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li><a href="https://market.cnblogs.com" target="_blank">云市场</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="//assets.cnblogs.com/icons/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'daimajiangxin', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//assets.cnblogs.com/icons/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//assets.cnblogs.com/icons/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/daimajiangxin/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/daimajiangxin">daimajiangxin</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/daimajiangxin/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E4%BB%A3%E7%A0%81%E5%8C%A0%E5%BF%83">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/daimajiangxin/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                <a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/daimajiangxin/p/18274933" title="发布于 2024-06-29 12:11">
+    <span role="heading" aria-level="2">从零开始学Spring Boot系列-集成Spring Security实现用户认证与授权</span>
+    
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<p>在Web应用程序中，安全性是一个至关重要的方面。Spring Security是Spring框架的一个子项目，用于提供安全访问控制的功能。通过集成Spring Security，我们可以轻松实现用户认证、授权、加密、会话管理等安全功能。本篇文章将指导大家从零开始，在Spring Boot项目中集成Spring Security，并通过MyBatis-Plus从数据库中获取用户信息，实现用户认证与授权。</p>
+<h2 id="环境准备">环境准备</h2>
+<p>在开始之前，请确保你的开发环境已经安装了Java、Gradle和IDE（如IntelliJ IDEA或Eclipse）。同时，你也需要在项目中引入Spring Boot、Spring Security、MyBatis-Plus以及数据库的依赖。</p>
+<h2 id="创建spring-boot项目">创建Spring Boot项目</h2>
+<p>首先，我们需要创建一个Spring Boot项目。可以使用Spring Initializr（<a href="https://start.spring.io/" target="_blank" rel="noopener">https://start.spring.io/</a>）来快速生成项目结构。在生成项目时，选择所需的依赖，如Web、Thymeleaf（或JSP）、Spring Security等。</p>
+<h2 id="添加spring-security依赖">添加Spring Security依赖</h2>
+<p>在项目的pom.xml（Maven）或build.gradle（Gradle）文件中，添加Spring Security的依赖。<br>
+对于Gradle，添加以下依赖：</p>
+<pre><code>group = 'cn.daimajiangxin'
+version = '0.0.1-SNAPSHOT'
+description ='Spring Security'
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.17'
+    // MyBatis-Plus 依赖
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter:3.5.5'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+}
+</code></pre>
+<p>对于Maven，添加以下依赖：</p>
+<pre><code>&lt;dependency&gt;  
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;  
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;  
+&lt;/dependency&gt;
+</code></pre>
+<h2 id="创建实体类">创建实体类</h2>
+<p>创建一个简单的实体类，映射到数据库表。</p>
+<pre><code>package cn.daimajiangxin.springboot.learning.model;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+import java.io.Serializable;
+
+@TableName(value ="user")
+@Data
+public class User implements Serializable {
+    /**
+     * 学生ID
+     */
+    @TableId(type = IdType.AUTO)
+    private Long id;
+
+    /**
+     * 姓名
+     */
+    private String name;
+    @TableField(value="user_name")
+    private String userName;
+
+    private String password;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+</code></pre>
+<h2 id="创建mapper接口">创建Mapper接口</h2>
+<p>创建对应的Mapper接口，通常放在与实体类相同的包下，并继承BaseMapper 接口。例如：</p>
+<pre><code class="language-java">package cn.daimajiangxin.springboot.learning.mapper;
+
+import cn.daimajiangxin.springboot.learning.model.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+public interface UserMapper extends BaseMapper&lt;User&gt; {
+
+}
+</code></pre>
+<h2 id="创建mapper-xml文件">创建Mapper XML文件</h2>
+<p>在resources的mapper目录下创建对应的XML文件，例如UserMapper.xml：</p>
+<pre><code class="language-java">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;
+&lt;mapper namespace="cn.daimajiangxin.springboot.learning.mapper.UserMapper"&gt;
+
+    &lt;resultMap id="BaseResultMap" type="cn.daimajiangxin.springboot.learning.model.User"&gt;
+            &lt;id property="id" column="id" jdbcType="BIGINT"/&gt;
+            &lt;result property="name" column="name" jdbcType="VARCHAR"/&gt;
+            &lt;result property="user_name" column="userName" jdbcType="VARCHAR"/&gt;
+            &lt;result property="password" column="password" jdbcType="VARCHAR"/&gt;
+            &lt;result property="email" column="email" jdbcType="VARCHAR"/&gt;
+            &lt;result property="age" column="age" jdbcType="INTEGER"/&gt;
+            &lt;result property="remark" column="remark" jdbcType="VARCHAR"/&gt;
+    &lt;/resultMap&gt;
+
+    &lt;sql id="Base_Column_List"&gt;
+        id,name,email,age,remark
+    &lt;/sql&gt;
+  
+    &lt;select id="findAllUsers"  resultMap="BaseResultMap"&gt;
+     select
+       &lt;include refid="Base_Column_List"&gt;&lt;/include&gt;
+     from user
+    &lt;/select&gt;
+&lt;/mapper&gt;
+
+</code></pre>
+<h2 id="创建service-接口">创建Service 接口</h2>
+<p>在service目录下服务类接口UserService</p>
+<pre><code class="language-java">package cn.daimajiangxin.springboot.learning.service;
+
+import cn.daimajiangxin.springboot.learning.model.User;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+public interface UserService extends IService&lt;User&gt; {
+
+}
+</code></pre>
+<h2 id="创建service实现类">创建Service实现类</h2>
+<p>在service目录下创建一个impl目录，并创建UserService实现类UserServiceImpl</p>
+<pre><code class="language-java">package cn.daimajiangxin.springboot.learning.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import cn.daimajiangxin.springboot.learning.model.User;
+import cn.daimajiangxin.springboot.learning.service.UserService;
+import cn.daimajiangxin.springboot.learning.mapper.UserMapper;
+import org.springframework.stereotype.Service;
+@Service
+public class UserServiceImpl extends ServiceImpl&lt;UserMapper, User&gt;implements UserService{
+
+}
+</code></pre>
+<h2 id="创建userdetailsservice实现类">创建UserDetailsService实现类</h2>
+<pre><code>package cn.daimajiangxin.springboot.learning.service.impl;
+
+import cn.daimajiangxin.springboot.learning.model.User;
+import cn.daimajiangxin.springboot.learning.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import jakarta.annotation.Resource;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class UserDetailServiceImpl implements UserDetailsService {
+    @Resource
+    private  UserService userService;
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        LambdaQueryWrapper&lt;User&gt;  queryWrapper=new LambdaQueryWrapper&lt;User&gt;();
+        queryWrapper.eq(User::getUserName,username);
+        User user=userService.getOne(queryWrapper);
+        List&lt;GrantedAuthority&gt; authorities = new ArrayList&lt;&gt;();
+        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(),authorities );
+    }
+}
+
+</code></pre>
+<h3 id="java配置类">Java配置类</h3>
+<p>创建一个配置类，并创建SecurityFilterChain 的Bean。</p>
+<pre><code>package cn.daimajiangxin.springboot.learning.config;
+
+import jakarta.annotation.Resource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig   {
+    @Resource
+    private UserDetailsService userDetailsService;
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorizeRequests -&gt;
+                        authorizeRequests
+                                .requestMatchers("/", "/home")
+                                .permitAll()
+                                .anyRequest().authenticated() // 其他所有请求都需要认证
+                )
+                .formLogin(formLogin -&gt;
+                        formLogin
+                                .loginPage("/login") // 指定登录页面
+                                .permitAll() // 允许所有人访问登录页面
+                )
+                .logout(logout -&gt;
+                        logout
+                                .permitAll() // 允许所有人访问注销URL
+                )    // 注册重写后的UserDetailsService实现
+                .userDetailsService(userDetailsService);
+        return http.build();
+        // 添加自定义过滤器或其他配置
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new StandardPasswordEncoder();
+    }
+}
+
+</code></pre>
+<h2 id="创建登录页面">创建登录页面</h2>
+<p>在src/main/resources/templates目录下创建一个Thymeleaf模板作为登录页面，例如login.html。</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;title&gt;登录&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form th:action="@{/doLogin}" method="post"&gt;
+    &lt;div&gt;&lt;label&gt; User Name : &lt;input type="text" name="username"/&gt; &lt;/label&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;label&gt; Password: &lt;input type="password" name="password"/&gt; &lt;/label&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;input type="submit" value="登录"/&gt;&lt;/div&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2 id="创建控制器">创建控制器</h2>
+<p>创建一个UserController，</p>
+<pre><code>package cn.daimajiangxin.springboot.learning.controller;
+
+import cn.daimajiangxin.springboot.learning.model.User;
+import cn.daimajiangxin.springboot.learning.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+@RestController
+public class UserController {
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping({"/login",})
+    public ModelAndView login(Model model) {
+        ModelAndView mv = new ModelAndView("login");
+        return mv ;
+    }
+    @PostMapping("/doLogin")
+    public String doLogin(@RequestParam String username,@RequestParam String password) {
+        QueryWrapper&lt;User&gt; queryWrapper=new QueryWrapper&lt;&gt;();
+        queryWrapper.eq("user_name",username);
+        User user=  userService.getOne(queryWrapper);
+        if(user==null){
+            return "登录失败，用户没有找到";
+        }
+        if(! user.getPassword().equals(password)){
+            return "登录失败，密码错误";
+        }
+        return "登录成功";
+    }
+
+}
+
+</code></pre>
+<h2 id="登录页面">登录页面</h2>
+<p>运行你的Spring Boot应用程序，用浏览器访问<a href="http://localhost:8080/login" target="_blank" rel="noopener">http://localhost:8080/login</a>.<br>
+<img src="https://img2024.cnblogs.com/blog/3365149/202406/3365149-20240629120912807-862943325.png" alt="20240601104136" loading="lazy"></p>
+<hr>
+<p>和我一起学习更多精彩知识！！！关注我公众号：代码匠心，实时获取推送。</p>
+<p>源文来自：<a href="https://daimajiangxin.cn" target="_blank" rel="noopener">https://daimajiangxin.cn</a></p>
+<p>源码地址：<a href="https://gitee.com/daimajiangxin/springboot-learning" target="_blank" rel="noopener">https://gitee.com/daimajiangxin/springboot-learning</a></p>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.13950445178819446" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2024-06-29 12:11">2024-06-29 12:11</span>&nbsp;
+<a href="https://www.cnblogs.com/daimajiangxin">代码匠心</a>&nbsp;
+阅读(<span id="post_view_count">24</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18274933" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(18274933);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '18274933', targetLink: 'https://www.cnblogs.com/daimajiangxin/p/18274933', title: '从零开始学Spring Boot系列-集成Spring Security实现用户认证与授权' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script>
+    var cb_entryId = 18274933, cb_entryCreatedDate = '2024-06-29 12:11', cb_postType = 1, cb_postTitle = '从零开始学Spring Boot系列-集成Spring Security实现用户认证与授权';
+    var allowComments = true, cb_blogId = 814146, cb_blogApp = 'daimajiangxin', cb_blogUserGuid = 'a06a8286-387c-4321-9888-08dbfd549689';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");    
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav">
+                <a class="comment-nav-left forpc" href="https://www.cnblogs.com/cmt/p/18239927" target="_blank">指间灵动，快码加编</a>
+        <div class="comment-nav-right">
+            <span id="span_refresh_tips"></span><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a>
+        </div>
+    </div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+        <div id="cnblogs_c1" class="under-post-card">
+            <a href="https://www.cnblogs.com/cmt/p/18247621" rel="nofollow" target="_blank" onclick="countCreativeClicks('C1-阿里云-PolarDB')">
+                <img src="https://img2024.cnblogs.com/blog/35695/202406/35695-20240614120651454-1867031816.jpg" onload="countCreativeImpressions('C1-阿里云-PolarDB')" alt="" />
+                <span id="c1_impression" style="display:none"></span>
+            </a>
+        </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2024 代码匠心
+<br /><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8ONv0caE5GtEh3YJ5j088kmjpORCIEdCMeKOH8Blf9_oIV9HNUxlHlCb7WfKAcBt2BjMIJSdcKMBCjLHQji4QbyNqDf5WoO3IJNv2TKA5OhvS-6rlUEzENiSDT3ZoYN8wtHI5KFT-qG49BGTlLuladY" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M95P3TTWJZ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

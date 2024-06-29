@@ -1,0 +1,9 @@
+F:\CSharpProgram\CSharpWork\h1.Crawler\bin\Debug\h1.Crawler.exe.config
+F:\CSharpProgram\CSharpWork\h1.Crawler\bin\Debug\h1.Crawler.exe
+F:\CSharpProgram\CSharpWork\h1.Crawler\bin\Debug\h1.Crawler.pdb
+F:\CSharpProgram\CSharpWork\h1.Crawler\obj\Debug\h1.Crawler.csproj.AssemblyReference.cache
+F:\CSharpProgram\CSharpWork\h1.Crawler\obj\Debug\h1.Crawler.Properties.Resources.resources
+F:\CSharpProgram\CSharpWork\h1.Crawler\obj\Debug\h1.Crawler.csproj.GenerateResource.cache
+F:\CSharpProgram\CSharpWork\h1.Crawler\obj\Debug\h1.Crawler.csproj.CoreCompileInputs.cache
+F:\CSharpProgram\CSharpWork\h1.Crawler\obj\Debug\h1.Crawler.exe
+F:\CSharpProgram\CSharpWork\h1.Crawler\obj\Debug\h1.Crawler.pdb

@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="keywords" content="模型训练,深度学习,分布式训练" />
+    <meta name="description" content="切分方式 前置知识 矩阵乘法求导 \[Y=f(AB)=f(C) \]\[\frac{\partial Y}{\partial A} = \frac{\partial Y}{\partial C} \cdot B^{T} \]\[\frac{\partial Y}{\partial B} = A^{T" />
+    <meta property="og:description" content="切分方式 前置知识 矩阵乘法求导 \[Y=f(AB)=f(C) \]\[\frac{\partial Y}{\partial A} = \frac{\partial Y}{\partial C} \cdot B^{T} \]\[\frac{\partial Y}{\partial B} = A^{T" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>LLM并行训练2-张量并行 - SunStriKE - 博客园</title>
+    <link rel="canonical" href="https://www.cnblogs.com/sunstrikes/p/18271719" />
+    <link rel="shortcut icon" id="favicon" href="//assets.cnblogs.com/favicon.svg?v=2" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=66sYdxA-9u2BKP7H-2HZILs0zfHHyg9mPlzJ5LGJ9qA" />
+    
+
+    
+        <link id="highlighter-theme-prism-atom-dark" type="text/css" rel="stylesheet" href="/css/prismjs/prism-atom-dark.css?v=o2pW4nFwuNsw5S1LYviqZamlmOzGS2mClV4SUUaiBGE" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/sunstrikes/custom.css?v=VqHZo&#x2B;uzKb/gfbZ3VlP2mBnmPIM=" />
+    <link type="text/css" rel="stylesheet" href="/css/fonts/Consolas.min.css" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/css/mobile-common.min.css?v=F2e9dMGzAUzDRZU-W-4qVsoLMeDjGqD2cUFxFY5EcWc" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/sunstrikes/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/sunstrikes/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/sunstrikes/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 787305;
+        var currentBlogApp = 'sunstrikes';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'Custom';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 2;
+        window.enableCodeLineNumber = true;
+        window.codeHighlightTheme = 'prism-atom-dark';
+        window.darkModeCodeHighlightTheme = 'prism-atom-dark';
+        window.isDarkCodeHighlightTheme = true;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+        <script>
+            window.currentPostId = 18271719;
+            window.currentPostDateAdded = '2024-06-27 17:22';
+        </script>
+    <script src="https://assets.cnblogs.com/scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn-www.cnblogs.com/js/blog-common.min.js?v=HVD3OuTcaOS-_cdZWluRJer8akyNk6T2cpj5RqCIgDQ"></script>
+        <script>updateCustomBlogReferrer();</script>
+    
+</head>
+<body class="skin-custom no-navbar mathjax3">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="//assets.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li><a href="https://www.cnblogs.com/cmt/articles/18197617">众包</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li><a href="https://market.cnblogs.com" target="_blank">云市场</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="//assets.cnblogs.com/icons/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'sunstrikes', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//assets.cnblogs.com/icons/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//assets.cnblogs.com/icons/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <div class="loading">
+  <div class="box">
+    <h2>Loading</h2>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/sunstrikes/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/sunstrikes">SunStriKE's Blog</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/sunstrikes/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/SunStriKE">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/sunstrikes/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                <a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/18271719" title="发布于 2024-06-27 17:22">
+    <span role="heading" aria-level="2">LLM并行训练2-张量并行</span>
+    
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        
+        张量并行相关原理的学习笔记
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h2 id="切分方式">切分方式</h2>
+<h3 id="前置知识">前置知识</h3>
+<p><a href="https://blog.csdn.net/zhh_hhz/article/details/109118538" target="_blank" rel="noopener">矩阵乘法求导</a></p>
+<p></p><div class="math display">\[Y=f(AB)=f(C)
+\]</div><p></p><p></p><div class="math display">\[\frac{\partial Y}{\partial A} = \frac{\partial Y}{\partial C} \cdot B^{T} 
+\]</div><p></p><p></p><div class="math display">\[\frac{\partial Y}{\partial B} =  A^{T} \cdot \frac{\partial Y}{\partial C}
+\]</div><p></p><p>以下定义X的dim为(M,K), W的dim为(K, N), 平均切分z次</p>
+<h3 id="行式切分">行式切分</h3>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240627171709041-1108710397.png" alt="image-20240627150212684" style="zoom: 50%">
+<p>forward</p>
+<p></p><div class="math display">\[Y= X_1W_1 + X_2W_2
+\]</div><p></p><p></p><div class="math display">\[X= concat(X_1, X_2, axis=1)
+\]</div><p></p><p></p><div class="math display">\[W = concat(W_1, W_2, axis= 0)
+\]</div><p></p><p>先把X按列切分每个子块的dim都是 (M, K/z), W1的dim(K/z, N), 这里利用了分块矩阵乘法的性质, 把切分好的Xi scatter到对应W的卡上, 计算完成后相加结果矩阵即可拿到Y的前向结果</p>
+<p>backward:</p>
+<p></p><div class="math display">\[\frac{\partial L}{\partial W_i} = \frac{\partial L}{\partial Y}\cdot \frac{\partial Y}{\partial Y_i}\cdot \frac{\partial Y_i}{\partial W_i} \\
+\]</div><p></p><p>Y对Yi的偏导因为 Y= Y1 + Y2求导偏导是1, 可以直接省略. 只需要把L对Y的偏导广播到W1, W2各自的卡上, 他们就能各自计算对应的梯度来更新W. L对X的偏导也是两张卡各自计算后(L对Y的偏导 * Wi的转置), 最后按列concat到一起就能得到最终X的偏导</p>
+<h3 id="列式切分">列式切分</h3>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240627171712603-51234.png" alt="image-20240627151744984" style="zoom: 50%">
+<p>forward:</p>
+<p></p><div class="math display">\[Y= concat(X_1W_1, X_2W_2, axis=1) \\
+\]</div><p></p><p>因为按列切分没有改变矩阵乘法的中间dim, 前向只需要concat起来两个切分后的乘法结果</p>
+<p>backward:</p>
+<p></p><div class="math display">\[\frac{\partial L}{\partial W_i} = \frac{\partial L}{\partial Y}\cdot \frac{\partial Y_i}{\partial W_i}
+\]</div><p></p><p></p><div class="math display">\[\frac{\partial L}{\partial X} = \frac{\partial L}{\partial X_1} + \frac{\partial Y_i}{\partial X_2} \\
+\]</div><p></p><p>这里是需要先把L对Y的导数切分后再传给各张卡, L对W的偏导计算方法和行切分一样, L对X的偏导因为对于损失L，X既参与了XW1的计算，也参与了XW2的计算, 所以需要把两张卡上对X1,X2的偏导求和. 得到最终的结果</p>
+<h2 id="mlp并行">MLP并行</h2>
+<p>以Y = GELU(X * A) * B 为例</p>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240627171718563-176405850.png" alt="image-20240627165655511" style="zoom: 50%">
+<p>forward: 把参数A进行列切分, B进行行切分. 先把X广播到每张卡上, 每张卡直接算完从A-&gt;B的所有流程后, AllReduce计算结果就能得到Y</p>
+<p>Backward: 把Grad(y)广播到各张卡上独立反向, 然后allreduce所有的grad(xi), 就能得到grad(x)</p>
+<p>这个设计真挺巧妙的. 如果我们只用行切分或者列切分, 在两个矩阵计算的中间必然会进行一次集合通信的同步. 列切分是AllGather, 行切分是AllReduce. 然而先行后列, 中间除了节省掉集合通信的成本, 连第二次列切分的时候需要先对X做分块操作的步骤都节省了. 牛啊</p>
+<h2 id="multiheadattention并行">MultiHeadAttention并行</h2>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240627171722433-669948550.png" alt="image-20240627170918832" style="zoom: 50%">
+<p>如果有两个头两张卡, 把V,Q,K权重矩阵进行列切分后. 算出来的Q1,Q2 通过concat就能得到Q, 完美的切分了数据和算力..真的感觉天然适配张量并行, 只要我们保证head数能整除卡数就能完全利用起来所有的卡.</p>
+<h2 id="总结">总结</h2>
+<p>张量并行结合了分块矩阵运算的性质, 通过合理的切分输入和参数, 再加上行列切分的合理配置. 就能节省掉很多过程中的不必要通信和冗余计算. 而且对效果无损, 看的过程中感觉好神奇.</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/622212228" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/622212228</a></p>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.7130743989780093" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2024-06-28 22:25">2024-06-27 17:22</span>&nbsp;
+<a href="https://www.cnblogs.com/sunstrikes">SunStriKE</a>&nbsp;
+阅读(<span id="post_view_count">8</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18271719" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(18271719);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '18271719', targetLink: 'https://www.cnblogs.com/sunstrikes/p/18271719', title: 'LLM并行训练2-张量并行' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script>
+    var cb_entryId = 18271719, cb_entryCreatedDate = '2024-06-27 17:22', cb_postType = 1, cb_postTitle = 'LLM并行训练2-张量并行';
+    var allowComments = true, cb_blogId = 787305, cb_blogApp = 'sunstrikes', cb_blogUserGuid = 'f40bf402-e30e-4f54-47f7-08d5e3ea7912';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");    
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav">
+                <a class="comment-nav-left forpc" href="https://www.cnblogs.com/cmt/p/18239927" target="_blank">指间灵动，快码加编</a>
+        <div class="comment-nav-right">
+            <span id="span_refresh_tips"></span><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a>
+        </div>
+    </div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+        <div id="cnblogs_c1" class="under-post-card">
+            <a href="https://www.cnblogs.com/cmt/p/18247621" rel="nofollow" target="_blank" onclick="countCreativeClicks('C1-阿里云-PolarDB')">
+                <img src="https://img2024.cnblogs.com/blog/35695/202406/35695-20240614120651454-1867031816.jpg" onload="countCreativeImpressions('C1-阿里云-PolarDB')" alt="" />
+                <span id="c1_impression" style="display:none"></span>
+            </a>
+        </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2024 SunStriKE
+<br /><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8ONv0caE5GtEh3YJ5j088knfJnEdnfemMJSqhyadjVHOUckDEyIraDViaOPM0K9vBdH5VMvkUgOsMuI2_5CHdkJ28D82qAbFzgfUtH9YCMXiKV3xX-Y4CtFK0qtPxicT3VPx21QgfMFP1NJHipy3O2Q" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M95P3TTWJZ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="keywords" content="模型训练,深度学习,分布式训练" />
+    <meta name="description" content="前置知识 混合精度训练 在参数存储时采取fp32, 开始进行fp/bp时转成fp16运算, 拿到fp16梯度后再转回fp32更新参数. ZeRO对显存占用的估算: 模型状态: Weights(fp16)、grad(fp16) 和 MasterWeights(fp32 模型参数备份)，momentum" />
+    <meta property="og:description" content="前置知识 混合精度训练 在参数存储时采取fp32, 开始进行fp/bp时转成fp16运算, 拿到fp16梯度后再转回fp32更新参数. ZeRO对显存占用的估算: 模型状态: Weights(fp16)、grad(fp16) 和 MasterWeights(fp32 模型参数备份)，momentum" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>LLM并行训练3-数据并行 - SunStriKE - 博客园</title>
+    <link rel="canonical" href="https://www.cnblogs.com/sunstrikes/p/18274445" />
+    <link rel="shortcut icon" id="favicon" href="//assets.cnblogs.com/favicon.svg?v=2" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=66sYdxA-9u2BKP7H-2HZILs0zfHHyg9mPlzJ5LGJ9qA" />
+    
+
+    
+        <link id="highlighter-theme-prism-atom-dark" type="text/css" rel="stylesheet" href="/css/prismjs/prism-atom-dark.css?v=o2pW4nFwuNsw5S1LYviqZamlmOzGS2mClV4SUUaiBGE" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/sunstrikes/custom.css?v=VqHZo&#x2B;uzKb/gfbZ3VlP2mBnmPIM=" />
+    <link type="text/css" rel="stylesheet" href="/css/fonts/Consolas.min.css" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/css/mobile-common.min.css?v=F2e9dMGzAUzDRZU-W-4qVsoLMeDjGqD2cUFxFY5EcWc" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/sunstrikes/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/sunstrikes/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/sunstrikes/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 787305;
+        var currentBlogApp = 'sunstrikes';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'Custom';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 2;
+        window.enableCodeLineNumber = true;
+        window.codeHighlightTheme = 'prism-atom-dark';
+        window.darkModeCodeHighlightTheme = 'prism-atom-dark';
+        window.isDarkCodeHighlightTheme = true;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+        <script>
+            window.currentPostId = 18274445;
+            window.currentPostDateAdded = '2024-06-28 22:25';
+        </script>
+    <script src="https://assets.cnblogs.com/scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn-www.cnblogs.com/js/blog-common.min.js?v=HVD3OuTcaOS-_cdZWluRJer8akyNk6T2cpj5RqCIgDQ"></script>
+        <script>updateCustomBlogReferrer();</script>
+    
+</head>
+<body class="skin-custom no-navbar mathjax3">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="//assets.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li><a href="https://www.cnblogs.com/cmt/articles/18197617">众包</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li><a href="https://market.cnblogs.com" target="_blank">云市场</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="//assets.cnblogs.com/icons/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'sunstrikes', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//assets.cnblogs.com/icons/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//assets.cnblogs.com/icons/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <div class="loading">
+  <div class="box">
+    <h2>Loading</h2>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/sunstrikes/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/sunstrikes">SunStriKE's Blog</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/sunstrikes/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/SunStriKE">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/sunstrikes/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                <a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/sunstrikes/p/18274445" title="发布于 2024-06-28 22:25">
+    <span role="heading" aria-level="2">LLM并行训练3-数据并行</span>
+    
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        
+        大模型训练 数据并行相关的学习笔记, 主要内容 zero, zero++
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h2 id="前置知识">前置知识</h2>
+<h3 id="混合精度训练">混合精度训练</h3>
+<h3 id="_"><img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628200819225-1777901567.png" alt="image-20240627193640147" style="zoom: 50%"></h3>
+<p>在参数存储时采取fp32, 开始进行fp/bp时转成fp16运算, 拿到fp16梯度后再转回fp32更新参数.</p>
+<p>ZeRO对显存占用的估算:</p>
+<ul>
+<li><strong>模型状态</strong>: Weights(fp16)、grad(fp16) 和 MasterWeights(fp32 模型参数备份)，momentum(fp32)和variance(fp32）。假设模型参数量 <span class="math inline">\(\Phi\)</span> ，则共需要<span class="math inline">\(2\Phi + 2\Phi + (4\Phi + 4\Phi + 4\Phi) = 4\Phi + 12\Phi = 16\Phi\)</span> 字节存储，</li>
+<li><strong>剩余状态</strong>: 除了模型状态之外的显存占用，包括激活值（activation）、各种临时缓冲区（buffer）以及无法使用的显存碎片（fragmentation）</li>
+</ul>
+<h3 id="adam">Adam</h3>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628200823119-1582109226.png" alt="image-20240627210940124" style="zoom: 50%">
+<p>在adam optimizer的计算状态除了参数, 还有一个<span class="math inline">\(m_t\)</span>(momentum 梯度均值)和<span class="math inline">\(v_t\)</span>(variance 梯度未中心化方差)需要存储, 一般被称为optimizer state.</p>
+<h3 id="alltoall通信原语">AllToAll通信原语</h3>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628204900905-660574036.png" alt="image-20240628204846386" style="zoom: 50%">
+<p>allToall类似于矩阵转置. 相当于我们需要先把每个节点里的数据按照他们要传递给哪个节点排好序, 然后根据切分好的顺序推给对应的节点. 可以看到如果每个节点的数据量是<span class="math inline">\(M\)</span>, 节点数是<span class="math inline">\(N\)</span>, 最终通信总量就是<span class="math inline">\(M * N\)</span></p>
+<h2 id="zero">ZeRO</h2>
+<p>在传统的训练方法里, 每张卡里存储一份完整的模型状态, 完成bp后allReduce grad,再更新每张卡里的副本. 这样子有N张卡就会多出<span class="math inline">\((N-1)\)</span>份冗余的参数存储. 当参数规模急剧增大时这种方法就完全不适合训练. ZeRO1 主要是将这些冗余的模型状态干掉, 通过增加通信来解决冗余参数的问题. <a href="https://github.com/microsoft/DeepSpeed/blob/master/blogs/zeropp/assets/images/zero-overview.gif" target="_blank" rel="noopener">ZeRO原理动态图</a><br>
+<img src="https://img2024.cnblogs.com/blog/1439743/202406/1439743-20240628222055592-1728847697.gif" alt="image" loading="lazy"></p>
+<ul>
+<li>ZeRO1: 只保留一份<code>MasterWeights+momentum+variance</code>.</li>
+<li>ZeRO2: 在ZeRO1的基础上去除了grad的冗余</li>
+<li>ZeRO3: 在ZeRO2的基础上去掉了weights的冗余</li>
+</ul>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628200827231-199449184.png" alt="image-20240627214641908" style="zoom: 67%">
+<h3 id="训练流程">训练流程</h3>
+<p>以ZeRO3为例. 主要分为5步, 假设使用了4张卡进行训练:</p>
+<ol>
+<li>每张卡上存1/4的W, OS和grad. 每张卡训练自己分配到的batch.</li>
+<li>fp时, AllGather所有卡上的W,取到全量的W(fp16)进行fp, 完成后只保留自己需要维护的1/4 W, 其他显存释放回池</li>
+<li>bp时, AllGather所有卡上的W进行bp, 完成后再抛弃其他卡维护的W</li>
+<li>完成bp后, ReduceScatter所有卡的G, 从其他卡上取到需要需要更新的梯度增量, 然后释放不是自己维护的G.</li>
+<li>使用自己维护的OS和G来更新W, 不需要通信.</li>
+</ol>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628200831636-915620370.png" alt="image-20240628163731199" style="zoom: 33%">
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628200835488-776484461.png" alt="image-20240628194209187" style="zoom: 50%">
+<h3 id="通信量分析">通信量分析</h3>
+<p>定义单卡数据量为<span class="math inline">\(\Phi\)</span></p>
+<p><mark>传统DP</mark>: bp完成后需要对梯度进行一次AllReduce, 一共<span class="math inline">\(2\Phi\)</span></p>
+<p><mark>ZeRO1</mark>: 只舍弃了OS, bp时需要AllReduce G(Scatter+Gather 共<span class="math inline">\(2\Phi\)</span>). 另外在使用每张卡各自更新W时, 因为W每张卡都存储的全量, 需要从存储OS的卡上把对应更新后的W再拉回来, 所以需要一次Gather(<span class="math inline">\(\Phi\)</span>), 一共需要<span class="math inline">\(3\Phi\)</span></p>
+<p><mark>ZeRO2</mark>: 舍弃了OS和G, bp时AllGather G(<span class="math inline">\(\Phi\)</span>), 更新W时从其他卡拉W, 再Gather一次(<span class="math inline">\(\Phi\)</span>), 一共需要<span class="math inline">\(2\Phi\)</span></p>
+<p><mark>ZeRO3</mark>: 上面训练过程分析过, 共需要2次Gather和1次Scatter, 一共需要<span class="math inline">\(3\Phi\)</span></p>
+<p>可以看到ZeRO在通信量只增加了1.5倍的情况下, 显存降了60倍. 效果非常显著</p>
+<h2 id="zero-1">ZeRO++</h2>
+<p>ZeRO存在的问题是会在GPU之间产生大量数据传输开销，降低了训练效率. 主要有两种情况：</p>
+<ol>
+<li>
+<p>全局batch size较小，而 GPU数量多，这导致每个 GPU 上batch size较小，需要频繁通信</p>
+</li>
+<li>
+<p>在低端集群上进行训练，其中跨节点网络带宽有限，导致高通信延迟。</p>
+</li>
+</ol>
+<p>ZeRO++主要采用了3部分优化: 权重量化 (qwZ), 分层分割存储 (hpZ), 梯度量化 (qgZ). 对比ZeRO通信量减少了4倍, 主要的难点都在<strong>减小量化带来的训练误差</strong>上</p>
+<h3 id="权重量化">权重量化</h3>
+<pre><code class="language-python">    def _quantize_int8(self, tensor: Tensor) -&gt; Tuple[Tensor, Tensor, Tensor]:
+        q_range = 2**self.config['num_bits'] - 1
+        min_value = tensor.amin(dim=self.config['group_dim'] + 1, keepdim=True)
+        max_value = tensor.amax(dim=self.config['group_dim'] + 1, keepdim=True)
+
+        scale = q_range / (max_value - min_value)
+
+        tensor = tensor.sub_(min_value).mul_(scale)
+        tensor = tensor_round(tensor_clamp(tensor, 0, q_range)).to(torch.uint8)  #对称式量化
+        return tensor, scale, min_value
+</code></pre>
+<p>量化代码在deepspeed<code>csrc/quantization/quantize.cu cached_quantization</code> 这个kernel里.</p>
+<p>如果采用全局fp16-&gt;int8的量化会导致极大误差. deepspeed采用了分区量化的方法, 把参数分为固定大小的block后, 先根据这个block的max/min计算出scale(量化系数), 在把这个参数传入量化函数里. 另外在通信的时候应该也需要每个block对应的系数传给接收节点用于反量化.</p>
+<p></p><div class="math display">\[量化公式: clip(round(scale * x), -2^{b-1}+1, 2^{b-1}-1)
+\]</div><p></p><p>通过这种方式在通信量减半的同时还能保证精度, 很nice的思路.</p>
+<p><img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628220021120-74447506.png" alt="image-20240628215923339" loading="lazy"></p>
+<h3 id="分层分割存储">分层分割存储</h3>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628200839841-1863889086.png" alt="image-20240628194529492" style="zoom: 50%">
+<p>之前ZeRO的W切分方法是根据卡数均分. 在fp/bp之前进行AllGather拉取, 后来发现在机器间进行Gather通信是比较严重的瓶颈. 所以最后W的切分变成了每个节点内存储全量的W, 节点内根据卡数进行切片. 避免跨节点经过网卡的通信, 通过增加显存使用的方式解决通信瓶颈.</p>
+<p>显存消耗: ZeRO3的单卡显存消耗为<span class="math inline">\(\frac{(2+2+K)*\Phi}{N}\)</span>, 这里每个节点多存了一份W, 如果有<span class="math inline">\(\alpha\)</span>个物理节点, 那么每张卡使用的显存就多了 <span class="math inline">\(\frac{\alpha * \Phi}{N}\)</span></p>
+<h3 id="梯度量化">梯度量化</h3>
+<p>如果直接在之前zero RingAllReduce的通信方式上加量化和反量化, 如下图左, 可以看到需要节点个数次量化/反量化. 而每次量化都是有损的, 这样会导致无法接受的训练误差. 为了解决这个问题zero++使用了一次量化-&gt;AllToAll通信-&gt;一次反量化的操作. 而因为直接进行AllToAll通信量从<span class="math inline">\(M\)</span>(参数量)变成了<span class="math inline">\(\frac{M*N}{Z}\)</span>(N: 节点数, Z:量化压缩率), 这个通信量的增长过大. deepspeed设计了2-hpop all-to-all方法来解决通信问题.</p>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628220329587-1755401267.png" alt="image-20240628200906350" style="zoom: 50%">
+<p>具体图示流程可以参考Deepspeed的<a href="https://github.com/microsoft/DeepSpeed/blob/master/blogs/zeropp/assets/images/qgz.gif" target="_blank" rel="noopener">blog动态图</a>, 文字版步骤:<br>
+<img src="https://img2024.cnblogs.com/blog/1439743/202406/1439743-20240628222155925-1494456644.gif" alt="image" loading="lazy"></p>
+<ol>
+<li>
+<p>节点内的卡间张量切片重排. 主要是因为alltoall切分成了两步, 如果不重排如下图左. 最后顺序会变错位, 然后进行参数量化</p>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628220334477-431681420.png" alt="image-20240628210835122" style="zoom: 50%">
+</li>
+<li>
+<p>节点内alltoall通信后反量化.先把卡内能合并的梯度加起来. 这里反量化主要是为了减小梯度累加的精度损失</p>
+</li>
+<li>
+<p>再次量化后, 节点间进行allToAll</p>
+</li>
+<li>
+<p>拿到通信结果, 反量化后再次reduce. 得到最终的梯度.</p>
+</li>
+</ol>
+<p>这里要进行两次alltoall的原因主要是, 第一次卡间alltoall之后梯度累加可以减少卡数倍的通信规模. 实际deepspeed在实现的时候还把重分片和量化kernel进行了fuse, 进一步优化性能</p>
+<p>还有下图的方法, 在通信当前层的时候, 通过多流异步量化下一层要通信的数据. 避免同步等待的浪费</p>
+<img src="https://img2023.cnblogs.com/blog/1439743/202406/1439743-20240628220338571-1668103299.png" alt="image-20240628211824538" style="zoom: 50%">
+<h2 id="参考">参考</h2>
+<p>zero: <a href="https://arxiv.org/pdf/1910.02054" target="_blank" rel="noopener">https://arxiv.org/pdf/1910.02054</a></p>
+<p>混合精度训练: <a href="https://arxiv.org/pdf/1710.03740" target="_blank" rel="noopener">https://arxiv.org/pdf/1710.03740</a></p>
+<p>zero++: <a href="https://arxiv.org/abs/2306.10209" target="_blank" rel="noopener">https://arxiv.org/abs/2306.10209</a></p>
+<p>Deepspeed blog: <a href="https://github.com/microsoft/DeepSpeed/blob/master/blogs/zeropp/chinese/README.md" target="_blank" rel="noopener">https://github.com/microsoft/DeepSpeed/blob/master/blogs/zeropp/chinese/README.md</a></p>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.5984759076354167" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2024-06-29 01:10">2024-06-28 22:25</span>&nbsp;
+<a href="https://www.cnblogs.com/sunstrikes">SunStriKE</a>&nbsp;
+阅读(<span id="post_view_count">46</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=18274445" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(18274445);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '18274445', targetLink: 'https://www.cnblogs.com/sunstrikes/p/18274445', title: 'LLM并行训练3-数据并行' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script>
+    var cb_entryId = 18274445, cb_entryCreatedDate = '2024-06-28 22:25', cb_postType = 1, cb_postTitle = 'LLM并行训练3-数据并行';
+    var allowComments = true, cb_blogId = 787305, cb_blogApp = 'sunstrikes', cb_blogUserGuid = 'f40bf402-e30e-4f54-47f7-08d5e3ea7912';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");    
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav">
+                <a class="comment-nav-left forpc" href="https://www.cnblogs.com/cmt/p/18239927" target="_blank">指间灵动，快码加编</a>
+        <div class="comment-nav-right">
+            <span id="span_refresh_tips"></span><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a>
+        </div>
+    </div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+        <div id="cnblogs_c1" class="under-post-card">
+            <a href="https://www.cnblogs.com/cmt/p/18247621" rel="nofollow" target="_blank" onclick="countCreativeClicks('C1-阿里云-PolarDB')">
+                <img src="https://img2024.cnblogs.com/blog/35695/202406/35695-20240614120651454-1867031816.jpg" onload="countCreativeImpressions('C1-阿里云-PolarDB')" alt="" />
+                <span id="c1_impression" style="display:none"></span>
+            </a>
+        </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2024 SunStriKE
+<br /><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8ONv0caE5GtEh3YJ5j088kmYhLaAXgXXfiH56pYC9Ok_uNU0ODzCAew8nfW1Id8AF9zY5uhr4k1v-pUxqvqCLu2JIRqeSHhMEFuC8NB5x837pGINHTPiYjzJPSrdJ8o1CgWNevtwJ3Fm34OoeSxTkdg" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M95P3TTWJZ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>
