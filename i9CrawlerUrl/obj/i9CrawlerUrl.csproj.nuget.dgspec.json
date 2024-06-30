@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "restore": {
+    "F:\\CSharpProgram\\CSharpWork\\i9CrawlerUrl\\i9CrawlerUrl.csproj": {}
+  },
+  "projects": {
+    "F:\\CSharpProgram\\CSharpWork\\i9CrawlerUrl\\i9CrawlerUrl.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\CSharpProgram\\CSharpWork\\i9CrawlerUrl\\i9CrawlerUrl.csproj",
+        "projectName": "i9CrawlerUrl",
+        "projectPath": "F:\\CSharpProgram\\CSharpWork\\i9CrawlerUrl\\i9CrawlerUrl.csproj",
+        "packagesPath": "C:\\Users\\86180\\.nuget\\packages\\",
+        "outputPath": "F:\\CSharpProgram\\CSharpWork\\i9CrawlerUrl\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\86180\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://www.nuget.org/api/v2/": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

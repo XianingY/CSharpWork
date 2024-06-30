@@ -1,0 +1,92 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\CSharpProgram\\CSharpWork\\j10sql\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{94DD73FF-040A-4597-BA90-C26A37D58C26}|j10sql.csproj|F:\\CSharpProgram\\CSharpWork\\j10sql\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94DD73FF-040A-4597-BA90-C26A37D58C26}|j10sql.csproj|solutionrelative:classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94DD73FF-040A-4597-BA90-C26A37D58C26}|j10sql.csproj|f:\\csharpprogram\\csharpwork\\j10sql\\dbmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94DD73FF-040A-4597-BA90-C26A37D58C26}|j10sql.csproj|solutionrelative:dbmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94DD73FF-040A-4597-BA90-C26A37D58C26}|j10sql.csproj|F:\\CSharpProgram\\CSharpWork\\j10sql\\j10sql.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{94DD73FF-040A-4597-BA90-C26A37D58C26}|j10sql.csproj|solutionrelative:j10sql.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94DD73FF-040A-4597-BA90-C26A37D58C26}|j10sql.csproj|f:\\csharpprogram\\csharpwork\\j10sql\\logmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94DD73FF-040A-4597-BA90-C26A37D58C26}|j10sql.csproj|solutionrelative:logmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LogManager.cs",
+              "DocumentMoniker": "F:\\CSharpProgram\\CSharpWork\\j10sql\\LogManager.cs",
+              "RelativeDocumentMoniker": "LogManager.cs",
+              "ToolTip": "F:\\CSharpProgram\\CSharpWork\\j10sql\\LogManager.cs",
+              "RelativeToolTip": "LogManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T15:06:42.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "j10sql.csproj",
+              "DocumentMoniker": "F:\\CSharpProgram\\CSharpWork\\j10sql\\j10sql.csproj",
+              "RelativeDocumentMoniker": "j10sql.csproj",
+              "ToolTip": "F:\\CSharpProgram\\CSharpWork\\j10sql\\j10sql.csproj",
+              "RelativeToolTip": "j10sql.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-30T15:00:20.005Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DBManager.cs",
+              "DocumentMoniker": "F:\\CSharpProgram\\CSharpWork\\j10sql\\DBManager.cs",
+              "RelativeDocumentMoniker": "DBManager.cs",
+              "ToolTip": "F:\\CSharpProgram\\CSharpWork\\j10sql\\DBManager.cs",
+              "RelativeToolTip": "DBManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T15:00:48.649Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Classes.cs",
+              "DocumentMoniker": "F:\\CSharpProgram\\CSharpWork\\j10sql\\Classes.cs",
+              "RelativeDocumentMoniker": "Classes.cs",
+              "ToolTip": "F:\\CSharpProgram\\CSharpWork\\j10sql\\Classes.cs",
+              "RelativeToolTip": "Classes.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAA3wB0AAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T14:59:36.18Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
